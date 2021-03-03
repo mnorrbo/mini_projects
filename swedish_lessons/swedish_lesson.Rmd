@@ -1,0 +1,79 @@
+---
+title: "Swedish Lesson 1"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+```
+
+
+# Läsförståelse
+
+<center>
+> *Det var en gång en groda som hette Kermit. Kermit ville åka till Hollywood för att bli en kändis. På vägen till Hollywood träffade han många nya vänner. Han träffade också en dam, som var en gris. Hon hette Miss Piggy. Kermit och Miss Piggy gick på en dejt tillsammans. På dejten drack de vin i månskenet utomhus på en restaurang. Kermit tyckte om att sjunga och spela banjo. Hans vänner tyckte också om att sjunga, så det blev många sånger på vägen till Hollywood.*
+
+
+![](https://media.giphy.com/media/6fsGMXzPvNDWg/giphy.gif){#id .class width=50%}
+</center>
+
+<br>
+
+```{r djur, echo=FALSE}
+
+question("Vilket djur är Kermit?",
+  answer("Gris"),
+  answer("Groda", correct = TRUE),
+  answer("Fågel"),
+  answer("Mupp")
+)
+
+```
+
+
+```{r vart, echo=FALSE}
+
+question("Vart ville Kermit åka?",
+  answer("New York"),
+  answer("Bollywood"),
+  answer("Hollywood", correct = TRUE),
+  answer("Finland")
+)
+
+```
+
+
+```{r dejt, echo=FALSE}
+
+question("Vad gjorde Kermit och Miss Piggy på sin dejt?",
+  answer("Drack vin", correct = TRUE),
+  answer("Åkte till månen"),
+  answer("Pussades"),
+  answer("Satt inomhus på restaurang")
+)
+
+```
+
+
+
+```{r, echo=FALSE}
+textInput("test", "Skriv något:")
+textOutput("correct")
+```
+
+```{r, context="server"}
+observeEvent(input$test, {
+  if(str_detect(input$test, pattern = "något") == TRUE){
+  output$correct <- renderText("Rätt svar!")
+  }
+  else{
+    if(input$test == ""){
+      output$correct <- renderText("")}
+    else{output$correct <- renderText("Nu blev det fel!")}
+  }
+}
+)
+```
+
