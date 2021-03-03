@@ -1,0 +1,95 @@
+---
+title: "Fractal fun"
+author: "Mandy"
+date: "15/07/2020"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+# Matrix transformation function
+
+```{r}
+matrix_transf <- function(x, y){
+  
+  f1 <- matrix(
+  c(0, 0, 0, 0.16),
+  nrow = 2,
+  byrow = TRUE
+  )
+
+  f2 <- matrix(
+  c(0.85, 0.04, -0.04, 0.85),
+  nrow = 2,
+  byrow = TRUE
+  )
+
+  f3 <- matrix(
+  c(0.2, -0.26, 0.23, 0.22),
+  nrow = 2,
+  byrow = TRUE
+  )
+
+  f4 <- matrix(
+  c(-0.15, 0.28, 0.26, 0.24),
+  nrow = 2,
+  byrow = TRUE
+  )
+
+  f2_3_b <- matrix(
+  c(0, 1.6),
+  nrow = 2,
+  byrow = TRUE
+  )
+
+  f4_b <- matrix(
+  c(0, 0.44),
+  nrow = 2,
+  byrow = TRUE
+  )
+
+  q <- sample(1:100, 1)
+  input <- matrix(
+    c(x, y),
+    nrow = 2
+    )
+  
+  if (q == 1){
+    return(f1 %*% input)
+  }
+  
+  else if (q > 1 & q <= 86){
+    return(f2 %*% input + f2_3_b)
+  }
+  
+  else if (q > 86 & q <= 93){
+    return(f3 %*% input + f2_3_b)
+  }
+  
+  else 
+    return(f4 %*% input + f4_b)
+  }
+```
+
+# Function to create fern
+
+```{r}
+create_fern <- function(start_x, start_y){
+  temp_mat <- matrix(c(start_x, start_y),
+                     nrow = 2)
+  final_mat <- matrix(nrow = 2, 
+                      ncol = 5000)
+  for (i in 1:ncol(final_mat)){
+    final_mat[,i] <- temp_mat
+    temp_mat <- matrix_transf(temp_mat[1], temp_mat[2])
+  }
+  
+  return(final_mat)
+}
+```
+
+# Plotting a fern
+
+```{r}
+plot(t(create_fern(0, 0)))
+```
