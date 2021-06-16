@@ -1,0 +1,51 @@
+---
+title: "Svenska - 2"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+```
+
+```{r pronomen_1, echo=FALSE}
+
+question("Jag älskar _______ (her)",
+  answer("hon"),
+  answer("honom"),
+  answer("han"),
+  answer("henne", correct = TRUE)
+)
+
+```
+
+```{r pronomen_2, echo = FALSE}
+question("Du hatar _______ (me)",
+  answer("jag"),
+  answer("mig", correct = TRUE),
+  answer("min"),
+  answer("mitt")
+)
+
+```
+![](https://youtu.be/zNzZ1PfUDNk)
+```{r, echo=FALSE}
+textInput("test", "Skriv något:")
+textOutput("correct")
+```
+
+```{r, context="server"}
+observeEvent(input$test, {
+  if(str_detect(input$test, pattern = "något") == TRUE){
+  output$correct <- renderText("Rätt svar!")
+  }
+  else{
+    if(input$test == ""){
+      output$correct <- renderText("")}
+    else{output$correct <- renderText("Nu blev det fel!")}
+  }
+}
+)
+```
+
